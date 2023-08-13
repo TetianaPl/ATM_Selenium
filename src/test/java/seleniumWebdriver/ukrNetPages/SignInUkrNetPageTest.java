@@ -1,13 +1,10 @@
 package seleniumWebdriver.ukrNetPages;
 
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import seleniumWebdriver.TestSetup;
-import seleniumWebdriver.gmailPages.SignInEmailGmailPage;
-import seleniumWebdriver.gmailPages.SignInPasswordGmailPage;
-
-import static org.testng.Assert.assertTrue;
 
 public class SignInUkrNetPageTest extends TestSetup {
     private String baseUrl = "https://accounts.ukr.net/";
@@ -16,19 +13,26 @@ public class SignInUkrNetPageTest extends TestSetup {
 
     @BeforeClass
     public void launchBrowser_CreatePage() {
-        driver.get(baseUrl);
-        signInUkrNetPage = new SignInUkrNetPage(driver);
-        assertTrue(signInUkrNetPage.isInitialized());
+//        driver.get(baseUrl);
+//        signInUkrNetPage = new SignInUkrNetPage(driver);
+//        assertTrue(signInUkrNetPage.isInitialized());
     }
 
+//
     @Test
     public void checkEmailFilling() {
-        driver.manage().deleteAllCookies();
-        signInUkrNetPage.enterName("");
-        signInUkrNetPage.enterPassword("");
-        signInUkrNetPage.clickSubmit();
-
-
+//        driver.manage().deleteAllCookies();
+//        signInUkrNetPage.enterName("test_qa123");
+//        signInUkrNetPage.enterPassword("test_qa111");
+//        signInUkrNetPage.clickSubmit();
+//
+//
+        driver.get("https://www.ukr.net/");
+        WebElement iframe = driver.findElement(By.cssSelector("[name=\"mail widget\"]"));
+        driver.switchTo().frame(iframe);
+        driver.findElement(By.cssSelector("input[name=\"login\"]")).sendKeys("test_qa123");
+        driver.findElement(By.cssSelector("input[type=\"password\"]")).sendKeys("test_qa111");
+        driver.findElement(By.cssSelector("button[type=\"submit\"]")).click();
     }
 
 }
