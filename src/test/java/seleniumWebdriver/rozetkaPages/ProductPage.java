@@ -1,14 +1,13 @@
 package seleniumWebdriver.rozetkaPages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import seleniumWebdriver.PageObject;
 
 public class ProductPage extends PageObject {
-
-    @FindBy(className = "tabs__list")
+//    private Actions actions;
+    @FindBy(xpath = "//ul[@class='tabs__list']")
     private WebElement navigationBar;
 
     public ProductPage(WebDriver driver) {
@@ -19,9 +18,11 @@ public class ProductPage extends PageObject {
         return navigationBar.isDisplayed();
     }
 
-    public PageObject clickTab(int tabNumber) {
-        navigationBar.findElement(By.xpath("li[" + tabNumber + "]")).click();
-        return new PageObject(driver);
+    public void clickTab(String tabName) {
+        WebElement element = navigationBar.findElement(By.xpath("//a[contains(@href, '" + tabName + "')]"));
+//Opens new tab in chrome
+//        element.click();
+        JavascriptExecutor jsExec = (JavascriptExecutor) driver;
+        jsExec.executeScript("arguments[0].click();", element);
     }
-
 }
